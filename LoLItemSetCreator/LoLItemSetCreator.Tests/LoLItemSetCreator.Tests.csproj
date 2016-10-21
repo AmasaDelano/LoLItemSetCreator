@@ -96,6 +96,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LoLItemSetCreator\LoLItemSetCreator.csproj">
+      <Project>{81303E35-CE5C-48DA-AF2E-4BE3A6CE7355}</Project>
+      <Name>LoLItemSetCreator</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

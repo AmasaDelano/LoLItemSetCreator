@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Castle.Components.DictionaryAdapter;
+using LoLItemSetCreator.DTOs;
+using LoLItemSetCreator.Repositories;
+using LoLItemSetCreator.Services;
 using Moq;
 using NUnit.Framework;
 
@@ -26,6 +28,16 @@ namespace LoLItemSetCreator.Tests.Services
             var items = _itemService.GetItems();
 
             _riotStaticRepositoryMock.Verify(e => e.GetItemList(), Times.Once);
+        }
+
+        [Test]
+        public void GetItems_Should_Return_An_Empty_List_When_GetItemList_Returns_Null()
+        {
+            _riotStaticRepositoryMock.Setup(e => e.GetItemList()).Returns((List<Item>) null);
+
+            var items = _itemService.GetItems();
+
+            Assert.IsEmpty(items);
         }
 
         [Test]
@@ -58,34 +70,5 @@ namespace LoLItemSetCreator.Tests.Services
 
             Assert.IsTrue(items.SequenceEqual(orderedItems));
         }
-    }
-
-    public interface IRiotStaticRepository
-    {
-        List<Item> GetItemList();
-    }
-
-    public class ItemService
-    {
-        private readonly IRiotStaticRepository _riotStaticRepository;
-
-        public ItemService(IRiotStaticRepository riotStaticRepository)
-        {
-            _riotStaticRepository = riotStaticRepository;
-        }
-
-        public List<Item> GetItems()
-        {
-            var items = _riotStaticRepository.GetItemList();
-
-            items = items.OrderBy(e => e.Cost).ToList();
-
-            return items;
-        }
-    }
-
-    public class Item
-    {
-        public int Cost { get; set; }
     }
 }
