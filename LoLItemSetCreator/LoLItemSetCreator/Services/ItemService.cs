@@ -23,7 +23,7 @@ namespace LoLItemSetCreator.Services
                 return new List<Item>();
             }
 
-            items = items.OrderBy(e => e.Cost).ToList();
+            items = items.OrderBy(e => e.Name).ToList();
 
             return items;
         }

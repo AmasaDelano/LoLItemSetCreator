@@ -41,32 +41,32 @@ namespace LoLItemSetCreator.Tests.Services
         }
 
         [Test]
-        public void GetItems_Should_Order_Items_By_Cost_By_Default()
+        public void GetItems_Should_Order_Items_Alphabetically_By_Default()
         {
             var itemList = new List<Item>
             {
                 new Item
                 {
-                    Cost = 2500
+                    Name = "Biscuit of Rejuvination"
                 },
                 new Item
                 {
-                    Cost = 75
+                    Name = "Face of the Mountain"
                 },
                 new Item
                 {
-                    Cost = 300
+                    Name = "Bloodthirster"
                 },
                 new Item
                 {
-                    Cost = 900
+                    Name = "Liandry's Torment"
                 }
             };
             _riotStaticRepositoryMock.Setup(e => e.GetItemList()).Returns(itemList);
 
             var items = _itemService.GetItems();
 
-            var orderedItems = items.OrderBy(e => e.Cost);
+            var orderedItems = items.OrderBy(e => e.Name);
 
             Assert.IsTrue(items.SequenceEqual(orderedItems));
         }
