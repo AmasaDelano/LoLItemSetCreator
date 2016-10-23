@@ -70,5 +70,34 @@ namespace LoLItemSetCreator.Tests.Services
 
             Assert.IsTrue(items.SequenceEqual(orderedItems));
         }
+
+        [Test]
+        public void GetItems_Should_Exclude_Items_With_Null_Name()
+        {
+            var itemList = new List<Item>
+            {
+                new Item
+                {
+                    Name = null
+                },
+                new Item
+                {
+                    Name = "Face of the Mountain"
+                },
+                new Item
+                {
+                    Name = "Bloodthirster"
+                },
+                new Item
+                {
+                    Name = "Liandry's Torment"
+                }
+            };
+            _riotStaticRepositoryMock.Setup(e => e.GetItemList()).Returns(itemList);
+
+            var items = _itemService.GetItems();
+
+            Assert.IsTrue(items.All(item => item.Name != null));
+        }
     }
 }
